@@ -5,11 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Task;
 
+use App\Models\User;
+
+use Auth;
+
 class TasksController extends Controller
 {
     public function index()
     {
         $tasks = auth()->user()->tasks();
+        // $tasks = Task::where('user_id', auth()->user()->id)
+        //       ->get();
+        //$tasks = Task::all();
+        // $id = auth()->user()->id;
+        // $tasks = Task::where('user_id', $id)->get();
+
+        // $tasks = User::getCasts();
         // return view('dashboard', compact('tasks'));
         return view('dashboard')->with('tasks', $tasks);
     }

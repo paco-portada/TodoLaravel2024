@@ -10,7 +10,9 @@
         "laravel/jetstream": "^5.1",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
-        "livewire/livewire": "^3.0"
+        "livewire/livewire": "^3.0",
+        "orchid/crud": "^4.2",
+        "orchid/platform": "^14.23"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
