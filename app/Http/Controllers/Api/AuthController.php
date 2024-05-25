@@ -12,15 +12,15 @@ class AuthController extends BaseController
 {
     public function login(Request $request)
     {
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
             $authUser = Auth::user(); 
-            $success['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken; 
-            $success['name'] =  $authUser->name;
+            $result['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken; 
+            $result['name'] =  $authUser->name;
    
-            return $this->sendResponse($success, 'User signed in');
+            return $this->sendResponse($result, 'User signed in');
         } 
-        else{ 
-            return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
+        else { 
+            return $this->sendError('Unauthorised.', ['error'=>'incorrect Email/Password']);
         } 
     }
     public function register(Request $request)
@@ -32,7 +32,7 @@ class AuthController extends BaseController
             'confirm_password' => 'required|same:password',
         ]);
    
-        if($validator->fails()){
+        if ($validator->fails()){
             return $this->sendError('Error validation', $validator->errors());       
         }
    
@@ -40,10 +40,10 @@ class AuthController extends BaseController
             $input = $request->all();
             $input['password'] = bcrypt($input['password']);
             $user = User::create($input);
-            $success['token'] =  $user->createToken('MyAuthApp')->plainTextToken;
-            $success['name'] =  $user->name;
+            $result['token'] =  $user->createToken('MyAuthApp')->plainTextToken;
+            $result['name'] =  $user->name;
        
-            return $this->sendResponse($success, 'User created successfully.');
+            return $this->sendResponse($result, 'User created successfully.');
         } catch (\Exception $e) {
             return $this->sendError('Registration Error' , $e->getMessage());
         }
